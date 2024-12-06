@@ -1,4 +1,7 @@
 package com.eventhub.dti.infrastructure.location.repository;
 
-public interface LocationRepository {
+import com.eventhub.dti.entity.Location;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface LocationRepository extends JpaRepository<Location, Long> {
 }

@@ -1,4 +1,10 @@
 package com.eventhub.dti.infrastructure.discount.repository;
 
-public interface DiscountRepository {
+import com.eventhub.dti.entity.Discount;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+
+@Repository
+public interface DiscountRepository extends JpaRepository<Discount, Long> {
 }

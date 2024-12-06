@@ -1,4 +1,8 @@
-package com.eventhub.dti.usecase.event.impl;
+package com.eventhub.dti.usecase.event;
 
-public class CreateEventUsecase {
+import com.eventhub.dti.infrastructure.event.dto.CreateEventRequestDTO;
+import com.eventhub.dti.infrastructure.event.dto.CreateEventResponseDTO;
+
+public interface CreateEventUseCase {
+  CreateEventResponseDTO create(CreateEventRequestDTO req);
 }

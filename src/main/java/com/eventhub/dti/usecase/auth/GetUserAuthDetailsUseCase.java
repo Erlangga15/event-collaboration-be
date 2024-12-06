@@ -1,4 +1,7 @@
 package com.eventhub.dti.usecase.auth;
 
-public interface GetUserAuthDetailsUsecase {
+
+import org.springframework.security.core.userdetails.UserDetailsService;
+
+public interface GetUserAuthDetailsUseCase extends UserDetailsService {
 }

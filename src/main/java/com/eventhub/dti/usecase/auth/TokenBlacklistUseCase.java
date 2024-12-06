@@ -1,5 +1,6 @@
-package com.eventhub.dti.usecase.auth.impl;
+package com.eventhub.dti.usecase.auth;
 
-public interface TokenBlacklistUsecase {
-  void 
+public interface TokenBlacklistUseCase {
+  void blacklistToken(String token, String expiredAt);
+  boolean isTokenBlacklisted(String token);
 }

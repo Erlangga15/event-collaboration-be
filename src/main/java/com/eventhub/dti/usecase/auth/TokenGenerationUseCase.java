@@ -1,4 +1,7 @@
 package com.eventhub.dti.usecase.auth;
 
-public interface TokenGenerationUsecase {
+import org.springframework.security.core.Authentication;
+
+public interface TokenGenerationUseCase {
+  String generateToken (Authentication authException);
 }

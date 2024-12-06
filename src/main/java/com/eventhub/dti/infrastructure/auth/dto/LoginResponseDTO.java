@@ -1,4 +1,4 @@
-package com.eventhub.dti.infrastructure.user.dto;
+package com.eventhub.dti.infrastructure.auth.dto;
 
 
 import lombok.AllArgsConstructor;

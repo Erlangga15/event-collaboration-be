@@ -1,16 +1,15 @@
-package com.eventhub.dti.infrastructure.config;
+package com.eventhub.dti.infrastructure.auth.dto;
 
-
+import com.eventhub.dti.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -20,7 +19,7 @@ public class UserAuth implements UserDetails {
 
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities(){
-    return List.of(new SimpleGrantedAuthority("ROLE_" + user.getRole()));
+      return new ArrayList<GrantedAuthority>();
   }
 
   @Override

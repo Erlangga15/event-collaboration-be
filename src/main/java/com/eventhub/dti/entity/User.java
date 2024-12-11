@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
 
+import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 import java.util.HashSet;
 import java.util.Set;
@@ -53,6 +54,10 @@ public class User {
   @Size(max = 50)
   @Column(name = "referral_code", unique = true)
   private String referralCode;
+
+  @ColumnDefault("0.0")
+  @Column(name = "points", precision = 10, scale = 2)
+  private BigDecimal points;
 
   @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
   @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))

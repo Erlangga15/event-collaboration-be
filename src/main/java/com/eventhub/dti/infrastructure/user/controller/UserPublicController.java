@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Log
 @RestController
-@RequestMapping("/api/v1/user")
+@RequestMapping("/api/v1/users")
 public class UserPublicController {
   private GetUserUseCase getUsersUseCase;
   private CreateUserUseCase createUserUsecase;

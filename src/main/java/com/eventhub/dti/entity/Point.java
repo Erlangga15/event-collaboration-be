@@ -22,6 +22,18 @@ public class Point {
   @Column(name = "point_id", nullable = false)
   private Long id;
 
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "user_id")
+  private User user;
+
+  @ColumnDefault("0.0")
+  @Column(name = "remaining", precision = 10, scale = 2)
+  private BigDecimal remaining;
+
+  @ColumnDefault("false")
+  @Column(name = "is_deducted")
+  private Boolean isDeducted;
+
   @NotNull
   @Column(name = "amount", nullable = false)
   private BigDecimal amount;
@@ -33,6 +45,9 @@ public class Point {
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "discount_id")
   private Discount discount;
+
+  @Column(name = "expired_at")
+  private OffsetDateTime expiredAt;
 
   @NotNull
   @ColumnDefault("CURRENT_TIMESTAMP")
@@ -46,4 +61,5 @@ public class Point {
 
   @Column(name = "deleted_at")
   private OffsetDateTime deletedAt;
+
 }

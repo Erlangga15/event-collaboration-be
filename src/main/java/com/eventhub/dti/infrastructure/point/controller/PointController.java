@@ -60,4 +60,9 @@ public class PointController {
     return isDeleted ? ResponseEntity.noContent().build()
       : ResponseEntity.status(HttpStatus.NOT_FOUND).build();
   }
+
+  @GetMapping("/invalidate-expired")
+  public void invalidateExpiredPoints() {
+    pointService.checkAndUpdateExpiredPoints();
+  }
 }

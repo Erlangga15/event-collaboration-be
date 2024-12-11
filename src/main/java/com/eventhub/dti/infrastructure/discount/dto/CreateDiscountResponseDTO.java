@@ -1,10 +1,30 @@
 package com.eventhub.dti.infrastructure.discount.dto;
 
 import com.eventhub.dti.entity.Discount;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
+import java.time.OffsetDateTime;
+import java.util.Date;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Component
 public class CreateDiscountResponseDTO {
+  private Long id;
+  private Long eventId;
+  private Date dateUsed;
+  private BigDecimal amount;
+  private String status;
+  private Long transactionId;
+  private OffsetDateTime createdAt;
+  private OffsetDateTime updatedAt;
+  private OffsetDateTime deletedAt;
+
   public CreateDiscountRequestDTO toDTO(Discount discount) {
     CreateDiscountRequestDTO createDiscountRequestDTO = new CreateDiscountRequestDTO();
     createDiscountRequestDTO.setId(discount.getId());

@@ -27,7 +27,7 @@ public class TokenBlacklist extends OncePerRequestFilter {
       response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
       return;
     }
-//    filterChain.doFilter(request, response);
+   filterChain.doFilter(request, response);
   }
 
   private String extractTokenFromRequest(HttpServletRequest request) {

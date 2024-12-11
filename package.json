@@ -19,8 +19,14 @@
     "docker:down": "docker-compose down",
     "docker:volumes": "docker volume rm eventhub_postgres",
     "docker:logs": "docker-compose logs -f",
+    "docker:clean": "docker-compose down -v",
     "docker:ps": "docker-compose ps",
-    "docker:clean": "docker-compose down -v"
+    "deploy:local": "docker-compose up -d",
+    "docker:deploy:local": "bash deploy.sh local",
+    "docker:start:eventhub": "bash run-local.sh",
+    "docker:stop:eventhub": "docker stop eventhub-app eventhub-postgres",
+    "docker:logs:eventhub": "docker logs -f eventhub-app",
+    "docker:clean:eventhub": "docker stop eventhub-app eventhub-postgres && docker rm eventhub-app eventhub-postgres"
   },
   "devDependencies": {
     "@commitlint/cli": "^18.4.3",

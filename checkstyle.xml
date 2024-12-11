@@ -67,24 +67,24 @@
     <module name="UpperEll"/>
 
     <!-- Custom Import Order -->
-    <module name="CustomImportOrder">
+    <!-- <module name="CustomImportOrder">
       <property name="customImportOrderRules"
           value="STATIC###STANDARD_JAVA_PACKAGE###THIRD_PARTY_PACKAGE###SPECIAL_IMPORTS"/>
       <property name="standardPackageRegExp" value="^java\."/>
       <property name="thirdPartyPackageRegExp" value="^org\.|^com\."/>
       <property name="specialImportsRegExp" value="^lombok\.|^jakarta\."/>
-      <property name="separateLineBetweenGroups" value="true"/>
+      <property name="separateLineBetweenGroups" value="false"/>
       <property name="sortImportsInGroupAlphabetically" value="false"/>
-  </module>
+    </module> -->
 
     <!-- Indentation -->
     <module name="Indentation">
-      <property name="basicOffset" value="2"/>
+      <property name="basicOffset" value="4"/>
       <property name="braceAdjustment" value="0"/>
-      <property name="caseIndent" value="2"/>
-      <property name="throwsIndent" value="2"/>
-      <property name="lineWrappingIndentation" value="2"/>
-      <property name="arrayInitIndent" value="2"/>
+      <property name="caseIndent" value="4"/>
+      <property name="throwsIndent" value="4"/>
+      <property name="lineWrappingIndentation" value="4"/>
+      <property name="arrayInitIndent" value="8"/>
     </module>
 
     <!-- One Top Level Class -->

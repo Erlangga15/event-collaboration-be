@@ -8,7 +8,7 @@
     "clean:verify": "mvnw.cmd clean verify",
     "clean:cache": "mvnw.cmd dependency:purge-local-repository",
     "clean:test": "mvnw.cmd clean test",
-    "install:dependencies": "mvnw.cmd install -DskipTests",
+    "install:dependencies": "mvnw.cmd clean install -DskipTests",
     "lint": "mvnw.cmd checkstyle:check",
     "format:check": "prettier --check .",
     "format:write": "prettier --write .",
@@ -17,6 +17,7 @@
     "prepare": "husky install",
     "docker:up": "docker-compose up -d",
     "docker:down": "docker-compose down",
+    "docker:volumes": "docker volume rm eventhub_postgres",
     "docker:logs": "docker-compose logs -f",
     "docker:ps": "docker-compose ps",
     "docker:clean": "docker-compose down -v"

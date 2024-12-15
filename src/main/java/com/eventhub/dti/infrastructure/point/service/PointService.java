@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -82,5 +83,11 @@ public class PointService {
       pointRepository.save(point);
       userRepository.save(user);
     }
+  }
+
+  public void addPointsToReferrer(User referrer, double points) {
+    LocalDateTime expirationDate = LocalDateTime.now().plusMonths(3);
+    referrer.addPoints(points, expirationDate);
+    userRepository.save(referrer);
   }
 }

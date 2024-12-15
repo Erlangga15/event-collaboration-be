@@ -3,14 +3,13 @@ package com.eventhub.dti.entity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
-import java.util.Date;
 
 @Entity
 @Getter
@@ -29,24 +28,28 @@ public class Discount {
   @JsonBackReference
   private Event event;
 
-  @Temporal(TemporalType.TIMESTAMP)
-  @Column(name = "date_used", nullable = false)
-  private Date dateUsed;
-
-  @NotNull
-  @Column(name = "amount", nullable = false)
-  private BigDecimal amount;
-
-  @Size(max = 50)
-  @NotNull
-  @Column(name = "status", length = 50)
-  private String status;
-
-  @MapsId
   @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "transaction_id")
+  @JoinColumn(name = "customer_id")
   @JsonBackReference
-  private Transaction transaction;
+  private User user;
+
+  @Column(name = "voucher_code", unique = true)
+  private String discountCode;
+
+  @Column(name = "voucher_value", precision = 15, scale = 2)
+  private BigDecimal discountValue;
+
+  @Column(columnDefinition = "TEXT")
+  private String description;
+
+  @Column(name = "voucher_type")
+  private String discountType;
+
+  @Column(name = "is_used")
+  private boolean isUsed;
+
+  @Column(name = "expires_at")
+  private LocalDateTime expiresAt;
 
   @NotNull
   @ColumnDefault("CURRENT_TIMESTAMP")

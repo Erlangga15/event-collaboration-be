@@ -1,6 +1,7 @@
 package com.eventhub.dti.usecase.user.impl;
 
 
+import com.eventhub.dti.entity.Role;
 import com.eventhub.dti.entity.User;
 import com.eventhub.dti.infrastructure.user.dto.BulkCreateUserRequestDTO;
 import com.eventhub.dti.infrastructure.user.dto.CreateUserRequestDTO;
@@ -15,6 +16,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Log
 @Service
@@ -35,8 +37,15 @@ public class CreateUserUseCaseImpl implements CreateUserUseCase {
     User newUser = req.toEntity();
     newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
 
+    Optional<Role> defaultRole = roleRepository.findByName("USER");
+    if (defaultRole.isPresent()) {
+      newUser.getRoles().add(defaultRole.get());
+    } else {
+      throw new RuntimeException("Default role not found");
+    }
+
     var savedUser = userRepository.save(newUser);
-    return new UserDetailResponseDTO(savedUser.getId(), savedUser.getEmail(), savedUser.getProfilePictureUrl(), savedUser.getIsOnboardingFinished());
+    return new UserDetailResponseDTO();
   }
 
   @Override

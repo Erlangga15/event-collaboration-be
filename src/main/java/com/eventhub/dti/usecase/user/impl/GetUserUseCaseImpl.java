@@ -19,12 +19,12 @@ public class GetUserUseCaseImpl implements GetUserUseCase {
   }
 
   @Override
-  public List<User> getAllUser() {
+  public List<User> getAllUsers() {
     return List.of();
   }
 
   @Override
-  public List<User> getAllUsers() {
+  public List<User> getAllUser() {
     return userRepository.findAll();
   }
 
@@ -32,7 +32,6 @@ public class GetUserUseCaseImpl implements GetUserUseCase {
   @Cacheable(value = "userDetailResponseDTO", key = "#id", unless = "#result.isOnboardingFinished == true")
   public UserDetailResponseDTO getUserById(Long id) {
     var foundUser = userRepository.findById(id).orElseThrow(() -> new DataNotFoundException("User not found"));
-    return new UserDetailResponseDTO(foundUser.getId(), foundUser.getEmail(), foundUser.getPassword(),
-      foundUser.getReferralCode(), foundUser.getProfilePictureUrl(), toString(), foundUser.getIsOnboardingFinished());
+    return new UserDetailResponseDTO();
   }
 }

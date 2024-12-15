@@ -41,7 +41,7 @@ public class PointController {
   }
 
   // Create New Point
-  @PostMapping
+  @PostMapping("/all")
   public ResponseEntity<CreatePointRequestDTO> createPoint(@RequestBody CreatePointRequestDTO createPointRequestDTO) {
     CreatePointRequestDTO createdPoint = pointService.createPoint(createPointRequestDTO);
     return ResponseEntity.status(HttpStatus.CREATED).body(createdPoint);

@@ -7,7 +7,7 @@ import com.eventhub.dti.infrastructure.user.dto.UserDetailResponseDTO;
 
 import java.util.List;
 
-public interface CreateUserUseCase {
+public interface CreateUserUseCase{
   UserDetailResponseDTO createUser(CreateUserRequestDTO req);
   User createUserWithEntity(User req);
   List<User> bulkCreateUser(BulkCreateUserRequestDTO req);

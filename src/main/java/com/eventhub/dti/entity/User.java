@@ -3,12 +3,14 @@ package com.eventhub.dti.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.util.HashSet;
 import java.util.Set;
@@ -18,6 +20,7 @@ import java.util.Set;
 @Getter
 @Setter
 @Table(name = "\"user\"")
+@AllArgsConstructor
 @NoArgsConstructor
 public class User {
 
@@ -63,6 +66,8 @@ public class User {
   @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
   private Set<Role> roles = new HashSet<>();
 
+  private String website;
+
   @NotNull
   @ColumnDefault("false")
   @Column(name = "is_onboarding_finished", nullable = false)
@@ -84,6 +89,12 @@ public class User {
   @PreRemove
   protected void onRemove() {
     deletedAt = OffsetDateTime.now();
+  }
+
+
+  public void addPoints(double points, LocalDateTime expirationDate) {
+    Point point = new Point();
+
   }
 
 }

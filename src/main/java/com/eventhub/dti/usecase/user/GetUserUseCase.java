@@ -7,9 +7,9 @@ import com.eventhub.dti.infrastructure.user.dto.UserDetailResponseDTO;
 import java.util.List;
 
 public interface GetUserUseCase {
-  List<User> getAllUser();
-
   List<User> getAllUsers();
+
+  List<User> getAllUser();
 
   UserDetailResponseDTO getUserById(Long id);
 }

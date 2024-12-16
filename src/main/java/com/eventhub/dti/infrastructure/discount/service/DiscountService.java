@@ -1,38 +1,36 @@
 package com.eventhub.dti.infrastructure.discount.service;
 
-import com.eventhub.dti.entity.Discount;
-import com.eventhub.dti.entity.Event;
-import com.eventhub.dti.entity.User;
+
+import com.eventhub.dti.entity.*;
 import com.eventhub.dti.infrastructure.discount.dto.CreateDiscountRequestDTO;
 import com.eventhub.dti.infrastructure.discount.dto.CreateDiscountResponseDTO;
 import com.eventhub.dti.infrastructure.discount.dto.DiscountSummaryDTO;
 import com.eventhub.dti.infrastructure.discount.repository.DiscountRepository;
 import com.eventhub.dti.infrastructure.event.repository.EventRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.eventhub.dti.infrastructure.user.repository.UserRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Optional;
 
 @Service
 public class DiscountService {
   private final DiscountRepository discountRepository;
   private final EventRepository eventRepository;
   private final CreateDiscountResponseDTO createDiscountResponseDTO;
+  private final UserRepository userRepository;
 
-  @Autowired
-  public DiscountService(DiscountRepository discountRepository, EventRepository eventRepository, CreateDiscountResponseDTO createDiscountResponseDTO) {
+  public DiscountService(DiscountRepository discountRepository, EventRepository eventRepository, CreateDiscountResponseDTO createDiscountResponseDTO, UserRepository userRepository) {
     this.discountRepository = discountRepository;
     this.eventRepository = eventRepository;
     this.createDiscountResponseDTO = createDiscountResponseDTO;
+    this.userRepository = userRepository;
   }
 
   public Discount createEventDiscount(CreateDiscountRequestDTO request, Long organizerId) {
-    Event event = (Event) eventRepository.findByIdAndOrganizerId(request.getEventId(), organizerId)
+    Event event = eventRepository.findByIdAndOrganizerId(request.getEventId(), organizerId)
       .orElseThrow(() -> new IllegalArgumentException("Event not found or not owned by organizer"));
 
     Discount discount = new Discount();
@@ -57,16 +55,32 @@ public class DiscountService {
     discountRepository.save(discount);
   }
 
-  public Page<DiscountSummaryDTO> getUpcomingEventVouchers(Long organizerId, Pageable pageable) {
-    return discountRepository.findUpcomingEventVouchersByOrganizer(organizerId, pageable);
+  public Page<DiscountSummaryDTO> getUpcomingEventDiscount (Long organizerId, Pageable pageable) {
+    return discountRepository.findUpcomingEventDiscountByOrganizer(organizerId, pageable.getOffset());
   }
 
-  public CreateDiscountResponseDTO getCreateDiscountResponseDTO(Long voucherId, Long organizerId) {
-    return discountRepository.findVoucherDetailsByIdAndOrganizer(voucherId, organizerId)
-      .orElseThrow(() -> new IllegalArgumentException("Voucher not found or not owned by organizer"));
+  public CreateDiscountResponseDTO getDiscountDetails(Long voucherId, Long organizerId) {
+    return discountRepository.findDiscountDetailsByIdAndOrganizer(voucherId, organizerId)
+      .orElseThrow(() -> new IllegalArgumentException("Discount not found or not owned by organizer"));
   }
 
-  public Page<Discount> getDiscountsByEventId(Long eventId, Pageable pageable) {
+  public Page<Discount> getDiscountByEventId(Long eventId, Pageable pageable) {
     return discountRepository.findByEventId(eventId, pageable);
+  }
+
+  public Page<DiscountSummaryDTO> getDiscountForCustomer(Long customerId, Pageable pageable) {
+    User customer = userRepository.findById(customerId)
+      .orElseThrow(() -> new IllegalArgumentException("Customer not found"));
+
+    Page<Discount> discount = discountRepository.findByUserId(customerId, pageable);
+
+    return discount.map(voucher -> {
+      DiscountSummaryDTO dto = new DiscountSummaryDTO();
+      dto.setDiscountId(createDiscountResponseDTO.getVoucherId());
+      dto.setDiscountCode(createDiscountResponseDTO.getDiscountCode());
+      dto.setEventName(createDiscountResponseDTO.getEventName());
+      dto.setStatus(createDiscountResponseDTO.getStatus());
+      return dto;
+    });
   }
 }

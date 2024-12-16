@@ -15,27 +15,11 @@ import java.util.Optional;
 
 @Repository
 public interface DiscountRepository extends JpaRepository<Discount, Long> {
-  @Query("SELECT new com.vibetribe.backend.infrastructure.usecase.voucher.dto.VoucherSummaryDTO(v.id, e.title, v.voucherCode, " +
-    "CASE WHEN v.voucherType = 'quantity' AND qbv.quantityLimit = qbv.quantityUsed THEN 'not available' " +
-    "WHEN v.voucherType = 'dateRange' AND v.expiresAt < CURRENT_TIMESTAMP THEN 'not available' " +
-    "ELSE 'available' END) " +
-    "FROM Voucher v " +
-    "JOIN v.event e " +
-    "LEFT JOIN v.quantityBasedVoucher qbv " +
-    "WHERE e.organizer.id = :organizerId AND e.dateTimeStart > CURRENT_TIMESTAMP")
-  Page<DiscountSummaryDTO> findUpcomingEventVouchersByOrganizer(@Param("organizerId") Long organizerId, Pageable pageable);
 
-  @Query("SELECT new com.vibetribe.backend.infrastructure.usecase.voucher.dto.VoucherDetailsDTO(v.id, e.title, v.description, v.voucherValue, v.voucherCode, v.voucherType, " +
-    "CASE WHEN v.voucherType = 'quantity' AND qbv.quantityLimit = qbv.quantityUsed THEN 'not available' " +
-    "WHEN v.voucherType = 'dateRange' AND v.expiresAt < CURRENT_TIMESTAMP THEN 'not available' " +
-    "ELSE 'available' END, qbv.quantityLimit - qbv.quantityUsed, drv.startDate, drv.endDate) " +
-    "FROM Voucher v " +
-    "JOIN v.event e " +
-    "LEFT JOIN v.quantityBasedVoucher qbv " +
-    "LEFT JOIN v.dateRangeBasedVoucher drv " +
-    "WHERE v.id = :voucherId AND e.organizer.id = :organizerId")
-  Optional<CreateDiscountResponseDTO> findVoucherDetailsByIdAndOrganizer(@Param("discountId") Long discountId, @Param("organizerId") Long organizerId);
-
-  //    @Query("SELECT v FROM Voucher v WHERE v.event.id = :eventId")
+  @Query
+  Page<DiscountSummaryDTO> findUpcomingEventDiscountByOrganizer(@Param("organizerId") Long organizerId, Long pageable);
+  Optional<CreateDiscountResponseDTO> findDiscountDetailsByIdAndOrganizer(@Param("discountId") Long discountId, @Param("organizerId") Long organizerId);
   Page<Discount> findByEventId(@Param("eventId") Long eventId, Pageable pageable);
+
+  Page<Discount> findByUserId(Long customerId, Pageable pageable);
 }

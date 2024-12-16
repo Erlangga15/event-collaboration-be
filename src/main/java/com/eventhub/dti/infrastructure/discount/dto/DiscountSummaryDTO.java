@@ -10,8 +10,8 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class DiscountSummaryDTO {
-  private Long voucherId;
+  private Long discountId;
   private String eventName;
-  private String voucherCode;
+  private String discountCode;
   private String status;
 }
